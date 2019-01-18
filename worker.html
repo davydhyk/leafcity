@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ua">
+<head>
+  <meta charset="utf-8">
+	<title>LeafCity</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
+  <meta name="theme-color" content="#00b484">
+  <link rel="stylesheet" href="css/slick.css">
+  <link rel="stylesheet" href="css/slick-theme.css">
+	<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <p>Змініть орієнтацію на книжну</p>
+  <section class="user">
+    <div class="user-tab">
+      <img src="img/leaf-dark.png" alt="">
+      <span>Додати місце</span>
+    </div>
+    <div class="slider-nav">
+      <div class="slider-nav-item">
+        <img src="img/map.png" alt="" class="passive">
+        <img src="img/map-a.png" alt="" class="active">
+      </div>
+      <div class="slider-nav-item">
+        <img src="img/profile.png" alt="" class="passive">
+        <img src="img/profile-a.png" alt="" class="active">
+      </div>
+      <div class="slider-nav-item">
+        <img src="img/bell.png" alt="" class="passive">
+        <img src="img/bell-a.png" alt="" class="active">
+      </div>
+    </div>
+    <div class="slider">
+      <div class="map">
+        <div id="map"></div>
+        <div class="btns">
+          <div class="add-leaf pick-up">Взяти найближче</div>
+          <div class="add-small search"><img src="img/search.png" alt=""></div>
+        </div>
+      </div>
+      <div class="profile">
+        <div class="profile-info">
+          <div class="profile-photo">
+            <img src="img/avatar.png" alt="">
+          </div>
+          <div class="profile-contacts">
+            <div class="profile-role">Водій</div>
+            <div class="profile-name">Андрій Вернюк</div>
+          </div>
+        </div>
+        <div class="profile-address">
+          <div class="profile-title"><img src="img/cnt.png" alt="">Кількість виконаних замовлень</div>
+          <div class="profile-value">Сьогодні <span>4</span></div>
+          <div class="profile-value">За тиждень <span>34</span></div>
+        </div>
+        <div class="profile-next">
+          <div class="profile-title"><img src="img/rate.png" alt="">Рейтинг</div>
+          <div class="profile-value">Ваш рейтинг <span>79%</span></div>
+        </div>
+        <div class="work end">Завершити роботу</div>
+      </div>
+      <div class="noti">
+        <ul>
+          <li>
+            <div class="noti-image">
+              <img src="img/noti/home.png" alt="">
+            </div>
+            <div class="noti-content">
+              <div class="noti-title green">Листя вивезено</div>
+              <div class="noti-text">Листя вивезено з вашого будинку, на ваш рахунок нараховано 17 монет. Дякуємо за допомогу</div>
+            </div>
+          </li>
+          <li>
+            <div class="noti-image">
+              <img src="img/noti/sad.png" alt="">
+            </div>
+            <div class="noti-content">
+              <div class="noti-title green">Машина недоступна</div>
+              <div class="noti-text">Нажаль в даний момент машина не може забрти листя. Ми повідомимо коли це стане можливо. Дякуємо за допомогу.</div>
+            </div>
+          </li>
+          <li>
+            <div class="noti-image">
+              <img src="img/noti/fire.png" alt="">
+            </div>
+            <div class="noti-content">
+              <div class="noti-title red">Ми вже реагуємо</div>
+              <div class="noti-text">Дякуємо за звертання. Найближчим часом наші фахівці вирішать питання з підпалом у вашому районі. Будьте обережні.</div>
+            </div>
+          </li>
+          <li>
+            <div class="noti-image">
+              <img src="img/noti/car.png" alt="">
+            </div>
+            <div class="noti-content">
+              <div class="noti-title green">Очікуйте машину</div>
+              <div class="noti-text">Машина прибуде до Вас на протязі 5 днів. Очікуйте сповіщення.</div>
+            </div>
+          </li>
+          <li>
+            <div class="noti-image">
+              <img src="img/noti/home.png" alt="">
+            </div>
+            <div class="noti-content">
+              <div class="noti-title green">Листя вивезено</div>
+              <div class="noti-text">Листя вивезено з вашого будинку, на ваш рахунок нараховано 17 монет. Дякуємо за допомогу</div>
+            </div>
+          </li>
+          <li>
+            <div class="noti-image">
+              <img src="img/noti/home.png" alt="">
+            </div>
+            <div class="noti-content">
+              <div class="noti-title green">Листя вивезено</div>
+              <div class="noti-text">Листя вивезено з вашого будинку, на ваш рахунок нараховано 17 монет. Дякуємо за допомогу</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBG2I3uy1WnkiNMJMwkqbyrQ0aFYWd5jzs"></script>
+  <script>
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: 50.617953144089846, lng: 26.258654594421387},
+      zoom: 17,
+      disableDefaultUI: true
+    });
+    var points = [
+      {lat: 50.619954144089846, lng: 26.259654594421387}, 
+      {lat: 50.618754144089846, lng: 26.257254594421387}, 
+      {lat: 50.618954144089846, lng: 26.258654594421387}, 
+      {lat: 50.617953144095846, lng: 26.260654594415387}, 
+      {lat: 50.616953144085846, lng: 26.257654594428387}
+    ];
+    var markers = [];
+    function addMarkerWithTimeout(position, timeout) {
+      window.setTimeout(function() {
+        markers.push(new google.maps.Marker({
+          position: position,
+          map: map,
+          animation: google.maps.Animation.DROP,
+          icon: 'img/marker.png'
+        }));
+      }, timeout);
+    }
+    for (var i = 0; i < points.length; i++) {
+      addMarkerWithTimeout(points[i], i * 300);
+    }
+  </script>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/slick.min.js"></script>
+  <script src="js/scripts.js"></script>
+</body>
+</html>
