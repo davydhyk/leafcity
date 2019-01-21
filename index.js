@@ -6,7 +6,8 @@ const express = require('express'),
       session = require('express-session'),
       MongoStore = require('connect-mongo')(session);
 
-const config = require('./config');
+const config = require('./config'),
+      routes = require('./routes');
 
 mongoose.Promise = global.Promise;
 mongoose.set('debug', config.DEV);
@@ -32,7 +33,15 @@ app.use(session({
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/api/auth', routes.auth);
+
+app.get('/reg', (req, res) => {
+  if (req.session.user_id) res.redirect('/');
+  else res.render('reg');
+});
 
 app.get('/', (req, res) => {
-  res.send('Hello, world!');
+  console.log(req.session.user_id);
+  res.render('index');
+  console.log(req.session.user_role);
 });
