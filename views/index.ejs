@@ -35,7 +35,7 @@
           </div>
           <div class="profile-contacts">
             <div class="profile-role">Користувач</div>
-            <div class="profile-name">Sergey Trofymchuk</div>
+            <div class="profile-name">Davyd <br>Huk</div>
           </div>
         </div>
         <div class="profile-address">
@@ -111,34 +111,4 @@
       </div>
     </div>
   </section>
-
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBG2I3uy1WnkiNMJMwkqbyrQ0aFYWd5jzs"></script>
-  <script>
-    var map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: 50.617953144089846, lng: 26.258654594421387},
-      zoom: 17,
-      disableDefaultUI: true
-    });
-    var points = [
-      {lat: 50.619954144089846, lng: 26.259654594421387}, 
-      {lat: 50.618754144089846, lng: 26.257254594421387}, 
-      {lat: 50.618954144089846, lng: 26.258654594421387}, 
-      {lat: 50.617953144095846, lng: 26.260654594415387}, 
-      {lat: 50.616953144085846, lng: 26.257654594428387}
-    ];
-    var markers = [];
-    function addMarkerWithTimeout(position, timeout) {
-      window.setTimeout(function() {
-        markers.push(new google.maps.Marker({
-          position: position,
-          map: map,
-          animation: google.maps.Animation.DROP,
-          icon: 'img/marker.png'
-        }));
-      }, timeout);
-    }
-    for (var i = 0; i < points.length; i++) {
-      addMarkerWithTimeout(points[i], i * 300);
-    }
-  </script>
 <%- include('parts/footer'); %>
