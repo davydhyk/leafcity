@@ -181,6 +181,7 @@ body > p {
 }
 
 .user-tab {
+  position: relative;
   margin-bottom: -1px;
   background-color: #00b484;
   height: 3em;
@@ -195,7 +196,7 @@ body > p {
           align-items: center;
 }
 
-.user-tab img {
+.user-tab > img {
   height: 2em;
   margin-right: 1em;
 }
@@ -203,6 +204,11 @@ body > p {
 .user-tab span {
   color: #fff;
   font-size: 1.2em;
+}
+
+.user-tab a {
+  position: absolute;
+  right: 15px;
 }
 
 .slider .slick-list, .slider .slick-track {
@@ -651,4 +657,18 @@ body > p {
     text-align: center;
   }
 }
-/*# sourceMappingURL=main.css.map */
+
+.msg {
+  text-align: center;
+  margin-bottom: 5px;
+  padding: 5px !important;
+}
+
+.msg.error {
+  color: red;
+  background-color: rgb(255, 0, 0, 0.1);
+}
+
+.msg.error ~ div input.error {
+  border-bottom-color: red;
+}

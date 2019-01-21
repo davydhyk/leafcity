@@ -1,22 +1,10 @@
-<!DOCTYPE html>
-<html lang="ua">
-<head>
-  <meta charset="utf-8">
-	<title>LeafCity</title>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
-  <meta name="theme-color" content="#00b484">
-  <link rel="stylesheet" href="css/slick.css">
-  <link rel="stylesheet" href="css/slick-theme.css">
-	<link rel="stylesheet" href="css/main.css">
-</head>
-<body>
+<%- include('parts/header'); %>
   <p>Змініть орієнтацію на книжну</p>
   <section class="user">
     <div class="user-tab">
       <img src="img/leaf-dark.png" alt="">
-      <span>Додати місце</span>
+      <span>LeafCity</span>
+      <a href="/api/auth/logout" class="logout"><img src="img/logout.png" alt=""></a>
     </div>
     <div class="slider-nav">
       <div class="slider-nav-item">
@@ -153,8 +141,4 @@
       addMarkerWithTimeout(points[i], i * 300);
     }
   </script>
-  <script src="js/jquery.min.js"></script>
-  <script src="js/slick.min.js"></script>
-  <script src="js/scripts.js"></script>
-</body>
-</html>
+<%- include('parts/footer'); %>

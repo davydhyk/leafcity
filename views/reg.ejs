@@ -1,0 +1,19 @@
+<%- include('parts/header'); %>
+	<p>Змініть орієнтацію на книжну</p>
+	<section class="login">
+		<a href="/" class="logo"><img src="img/logo-g.png" alt=""></a>
+		<form action="/api/auth/reg" method="POST">
+			<div><input name="email" type="email" placeholder="E-mail" required></div>
+			<div><input name="phone" type="tel" placeholder="Телефон" required></div>
+			<div><input name="password" type="password" placeholder="Пароль" required></div>
+			<div><input name="rep_password" type="password" placeholder="Повторіть пароль" required></div>
+			<div><input type="submit" value="Реєстрація" class="reg"></div>
+		</form>
+		<a href="/login" class="link">Уже зареєстровані?</a>
+		<div class="login-with">
+			<p>Увійти через соціальні мережі</p>
+			<a href="#"><img src="img/fb.png" alt=""></a>
+			<a href="#"><img src="img/gp.png" alt=""></a>
+		</div>
+	</section>
+<%- include('parts/footer'); %>
