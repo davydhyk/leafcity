@@ -35,6 +35,12 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/auth', routes.auth);
 
+app.get('/login', (req, res) => {
+  if (req.session.user_id) res.redirect('/');
+  else res.render('login');
+});
+
+
 app.get('/reg', (req, res) => {
   if (req.session.user_id) res.redirect('/');
   else res.render('reg');
@@ -42,6 +48,7 @@ app.get('/reg', (req, res) => {
 
 app.get('/', (req, res) => {
   console.log(req.session.user_id);
-  res.render('index');
+  if (!req.session.user_id) res.redirect('/login');
+  else res.render('index');
   console.log(req.session.user_role);
 });

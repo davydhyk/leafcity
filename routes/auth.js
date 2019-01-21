@@ -3,6 +3,52 @@ const models = require('../models');
 const emailValid = require("email-validator");
 const bcrypt = require('bcrypt-nodejs');
 
+router.get('/logout', (req, res) => {
+  if (req.session) req.session.destroy();
+  res.redirect('/');
+});
+
+router.post('/login', (req, res) => {
+  var phone = req.body.phone.replace(/ |\(|\)|-/g, ''),
+      password = req.body.password,
+      data = {
+        ok: true,
+        msg: '',
+        fields: []
+      };
+  if (!phone || !password) {
+    data.ok = false;
+    if (!phone) data.fields.push('phone');
+    if (!password) data.fields.push('password');
+    data.msg = 'Заповніть всі поля';
+  }
+  models.user.findOne({'phone': phone}, (err, user) => {
+    if (err) {data.ok = false; data.msg = 'Помилка. Спробуйте пізніше...';}
+    if (!data.ok) {res.send(data); return;}
+    if (!user) {data.ok = false; data.msg = 'Телефон або пароль не вірні';}
+    data.fields.push('phone');
+    data.fields.push('password');
+    if (!data.ok) {res.send(data); return;}
+    bcrypt.compare(password, user.password, function(err, result) {
+      if (err) {
+        data.ok = false;
+        data.msg = 'Помилка. Спробуйте пізніше...';
+        res.send(data);
+        return;
+      }
+      if (result == false) {
+        data.ok = false;
+        data.msg = 'Телефон або пароль не вірні';
+        res.send(data);
+        return;
+      }
+      req.session.user_id = user.id;
+      req.session.user_role = user.role;
+      res.send(data);
+    });
+  });
+});
+
 router.post('/reg', (req, res) => {
   var phone = req.body.phone,
       email = req.body.email,
