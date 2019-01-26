@@ -24,8 +24,8 @@
       <div class="map">
         <div id="map"></div>
         <div class="btns">
-          <div class="add-leaf pick-up">Додати місце</div>
-          <div class="add-small fire"><img src="img/fire.png" alt=""></div>
+          <div class="add-small leaf"><img src="img/leaf-white.png" alt=""><span>Підтвердити</span></div>
+          <div class="add-small fire"><img src="img/fire.png" alt=""><span>Підтвердити</span></div>
         </div>
       </div>
       <div class="profile">
@@ -111,4 +111,4 @@
       </div>
     </div>
   </section>
-<%- include('parts/footer'); %>
+<%- include('parts/footer', {markers: markers}); %>

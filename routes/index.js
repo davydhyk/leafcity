@@ -1,4 +1,6 @@
-const auth = require('./auth')
+const auth = require('./auth'),
+      marker = require('./marker');
 module.exports = {
-  auth
+  auth,
+  marker
 }

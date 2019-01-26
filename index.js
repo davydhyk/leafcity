@@ -8,6 +8,7 @@ const express = require('express'),
 
 const config = require('./config'),
       routes = require('./routes');
+      models = require('./models');
 
 mongoose.Promise = global.Promise;
 mongoose.set('debug', config.DEV);
@@ -34,6 +35,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/auth', routes.auth);
+app.use('/api/marker', routes.marker);
 
 app.get('/login', (req, res) => {
   if (req.session.user_id) res.redirect('/');
@@ -47,8 +49,23 @@ app.get('/reg', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  console.log(req.session.user_id);
   if (!req.session.user_id) res.redirect('/login');
-  else res.render('index');
-  console.log(req.session.user_role);
+  else {
+    var markers = [];
+    models.marker.find({}, (err, markersMap) => {
+      if (err) {
+        res.render('index');
+        return;
+      }
+      markersMap.forEach(markerEx => {
+        var marker = {
+          pos: markerEx.pos,
+          icon: markerEx.icon,
+          author: markerEx.author
+        }
+        markers.push(marker);
+      });
+      res.render('index', {markers: markers});
+    });
+  }
 });
