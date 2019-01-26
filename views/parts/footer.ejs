@@ -2,19 +2,6 @@
   <script src="js/jquery.min.js"></script>
   <script src="js/slick.min.js"></script>
   <script src="js/jquery.mask.min.js"></script>
-  <script>
-    <% if (markers) { %>
-      window.points = [
-        <% markers.forEach(function(marker){ %>
-          {
-            pos: <%= marker.pos %>,
-            icon: "<%= marker.icon %>",
-            author: "<%= marker.author %>"
-          },
-        <% }); %>
-      ];
-    <% } %>
-  </script>
   <script src="js/scripts.js"></script>
 </body>
 </html>

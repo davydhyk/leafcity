@@ -97,9 +97,19 @@ function map() {
       }));
     }, timeout);
   }
-  for (var i = 0; i < window.points.length; i++) {
-    addMarkerWithTimeout(window.points[i], i * 300);
-  }
+  $.get('/api/marker/get').done(function (data) {
+    if (!data.ok) {
+      var getErrInfo = new google.maps.InfoWindow({content: 'Error while loading markers!'});
+      var getErrInfoMarker = new google.maps.Marker({
+        position: map.getCenter(),
+        map: map
+      });
+      getErrInfo.open(map, getErrInfoMarker);
+    } else {
+      for (var i = 0; i < data.markers.length; i++)
+        addMarkerWithTimeout(data.markers[i], i * 300);
+    }
+  });
   var marker = new google.maps.Marker({animation: google.maps.Animation.DROP});
   $('.add-small').click(function () {
     if ($(this).hasClass('active')) {

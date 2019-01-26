@@ -17,4 +17,25 @@ router.post('/add', (req, res) => {
   });
 });
 
+router.get('/get', (req, res) => {
+  var data = {
+    ok: true,
+    markers: []
+  };
+  models.marker.find({}, (err, markersMap) => {
+    if (err) data.ok = false;
+    else {
+      markersMap.forEach(markerEx => {
+        var marker = {
+          pos: markerEx.pos,
+          icon: markerEx.icon,
+          author: markerEx.author
+        }
+        data.markers.push(marker);
+      });
+    }
+    res.send(data);
+  });
+});
+
 module.exports = router;

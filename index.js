@@ -50,22 +50,5 @@ app.get('/reg', (req, res) => {
 
 app.get('/', (req, res) => {
   if (!req.session.user_id) res.redirect('/login');
-  else {
-    var markers = [];
-    models.marker.find({}, (err, markersMap) => {
-      if (err) {
-        res.render('index');
-        return;
-      }
-      markersMap.forEach(markerEx => {
-        var marker = {
-          pos: markerEx.pos,
-          icon: markerEx.icon,
-          author: markerEx.author
-        }
-        markers.push(marker);
-      });
-      res.render('index', {markers: markers});
-    });
-  }
+  else res.render('index');
 });
