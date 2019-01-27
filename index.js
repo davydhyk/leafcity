@@ -50,5 +50,5 @@ app.get('/reg', (req, res) => {
 
 app.get('/', (req, res) => {
   if (!req.session.user_id) res.redirect('/login');
-  else res.render('index');
+  else res.render('index', {user_id: req.session.user_id});
 });

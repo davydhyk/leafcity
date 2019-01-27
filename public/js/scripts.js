@@ -1,3 +1,5 @@
+var markers = [];
+
 $(function () {
   $('body').css('height', window.innerHeight);
   $('.slider').height(calcheight());
@@ -86,34 +88,48 @@ function map() {
     zoom: 17,
     disableDefaultUI: true
   });
-  var markers = [];
   function addMarkerWithTimeout(marker, timeout) {
     window.setTimeout(function() {
-      markers.push(new google.maps.Marker({
-        position: marker.pos,
-        map: map,
-        animation: google.maps.Animation.DROP,
-        icon: marker.icon
-      }));
+      var i = parseInt(timeout / 100);
+      markers.push({
+        marker: new google.maps.Marker({
+          position: marker.pos,
+          map: map,
+          animation: google.maps.Animation.DROP,
+          icon: marker.icon
+        }),
+        info: new google.maps.InfoWindow({
+          content: '<span data-index="' + i + '" data-remove="' + marker.id + '" class="info-remove">Видалити</span>'
+        })
+      });
+      if (window.user_id == marker.author) {
+        markers[i].marker.addListener('click', function () {
+          markers[i].info.open(map, markers[i].marker);
+          setTimeout(function() {mapClicksInit()}, 50);
+        });
+      }
     }, timeout);
   }
   $.get('/api/marker/get').done(function (data) {
     if (!data.ok) {
-      var getErrInfo = new google.maps.InfoWindow({content: 'Error while loading markers!'});
+      var getErrInfo = new google.maps.InfoWindow({content: 'Помилка під час завантаження маркерів'});
       var getErrInfoMarker = new google.maps.Marker({
         position: map.getCenter(),
         map: map
       });
       getErrInfo.open(map, getErrInfoMarker);
+      getErrInfoMarker.addListener('click', function () {
+        getErrInfo.open(map, getErrInfoMarker);
+      });
     } else {
       for (var i = 0; i < data.markers.length; i++)
-        addMarkerWithTimeout(data.markers[i], i * 300);
+        addMarkerWithTimeout(data.markers[i], i * 100);
     }
   });
   var marker = new google.maps.Marker({animation: google.maps.Animation.DROP});
   $('.add-small').click(function () {
     if ($(this).hasClass('active')) {
-      $(this).removeClass('active');
+      var btn = $(this);
       var req = {
         pos: {
           lat: marker.getPosition().lat,
@@ -122,6 +138,13 @@ function map() {
         icon: marker.getIcon()
       }
       $.post('/api/marker/add', req).done(function (data) {
+        if (!data.ok) {
+          var addInfoErr = new google.maps.InfoWindow({content: 'Помилка.. Спробуйте пізніше.'});
+          addInfoErr.open(map, marker);
+          setTimeout(function () {addInfoErr.close();}, 2000);
+          return;
+        }
+        btn.removeClass('active');
         markers.push(new google.maps.Marker({
           position: marker.getPosition(),
           map: map,
@@ -142,11 +165,20 @@ function map() {
       });
     }
   });
+}
 
-  // var infowindow = new google.maps.InfoWindow;
-  // $.post('https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBG2I3uy1WnkiNMJMwkqbyrQ0aFYWd5jzs', {}).done(function (data) {
-  //   map.setCenter(data.location);
-  //   alert(JSON.stringify(data));
-  //   console.log(JSON.stringify(data));
-  // });
+function mapClicksInit() {
+  $('[data-remove]').click(function (e) {
+    e.preventDefault();
+    var id = $(this).data('remove'),
+        i = parseInt($(this).data('index'));
+    $.post('/api/marker/remove', {id: id}).done(function (data) {
+      if (!data.ok) {
+        if (data.message) markers[i].info.setContent(data.message);
+        else markers[i].info.setContent('Помилка.. Спробуйте пізніше.');
+        return;
+      }
+      markers[i].marker.setMap(null);
+    });
+  });
 }

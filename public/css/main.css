@@ -697,3 +697,18 @@ body > p {
 .msg.error ~ div input.error {
   border-bottom-color: red;
 }
+
+.info-remove {
+  display: inline-block;
+  padding: 0.2em 0.5em;
+  line-height: 1.2;
+  border-radius: 1em;
+  color: #fff;
+  background-color: #ea431c;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.info-remove:hover {
+  background-color: #d83914;
+}
