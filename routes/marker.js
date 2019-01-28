@@ -5,9 +5,6 @@ router.post('/add', (req, res) => {
   var data = {
     ok: true
   }
-  data.ok = false;
-  res.send(data);
-  return;
   if (!req.session.user_id) {
    data.ok = false;
    res.send(data);
