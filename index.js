@@ -36,6 +36,7 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/auth', routes.auth);
 app.use('/api/marker', routes.marker);
+app.use('/api/profile', routes.profile);
 
 app.get('/login', (req, res) => {
   if (req.session.user_id) res.redirect('/');
@@ -50,5 +51,16 @@ app.get('/reg', (req, res) => {
 
 app.get('/', (req, res) => {
   if (!req.session.user_id) res.redirect('/login');
-  else res.render('index', {user_id: req.session.user_id});
+  else {
+    if (req.session.user_role == "user") {
+      models.user.findById(req.session.user_id, (err, doc) => {
+        var user = {
+          id: req.session.user_id,
+          name: doc.name,
+          address: doc.address
+        }
+        res.render('user', {user: user});
+      });
+    }
+  }
 });

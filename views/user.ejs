@@ -35,12 +35,12 @@
           </div>
           <div class="profile-contacts">
             <div class="profile-role">Користувач</div>
-            <div class="profile-name">Davyd <br>Huk</div>
+            <div class="profile-name" data-edit data-edit-type="name"><%=user.name %></div>
           </div>
         </div>
         <div class="profile-address">
           <div class="profile-title"><img src="img/home.png" alt="">Домашня адреса</div>
-          <div class="profile-value">м. Рівне <br>вул. Соборна 250</div>
+          <div class="profile-value" data-edit data-edit-type="address"><%=user.address %></div>
           <div class="profile-refresh"><img src="img/refresh.png" alt=""></div>
         </div>
         <div class="profile-next">
@@ -113,6 +113,6 @@
   </section>
 
   <script>
-    window.user_id = '<%=user_id %>';
+    window.user_id = '<%=user.id %>';
   </script>
 <%- include('parts/footer'); %>

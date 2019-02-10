@@ -8,13 +8,15 @@ $(function () {
     slidesToShow: 3,
     arrows: false,
     focusOnSelect: true,
-    asNavFor: $('.slider')
+    asNavFor: $('.slider'),
+    initialSlide: 1
   });
   
   $('.slider').slick({
     slidesToShow: 1,
     arrows: false,
-    asNavFor: $('.slider-nav')
+    asNavFor: $('.slider-nav'),
+    initialSlide: 1
   });
 
   $('.slider').height(calcheight());
@@ -74,7 +76,8 @@ function calcheight() {
 }
 
 function map() {
-  var pos;
+  var pos,
+      markerInfo = new google.maps.InfoWindow();
   navigator.geolocation.getCurrentPosition(function(position) {
     pos = {
       lat: position.coords.latitude,
@@ -98,13 +101,13 @@ function map() {
           animation: google.maps.Animation.DROP,
           icon: marker.icon
         }),
-        info: new google.maps.InfoWindow({
-          content: '<span data-index="' + i + '" data-remove="' + marker.id + '" class="info-remove">Видалити</span>'
-        })
+        info: '<span data-index="' + i + '" data-remove="' + marker.id + '" class="info-remove">Видалити</span>'
       });
       if (window.user_id == marker.author) {
         markers[i].marker.addListener('click', function () {
-          markers[i].info.open(map, markers[i].marker);
+          markerInfo.close();
+          markerInfo.setContent(markers[i].info);
+          markerInfo.open(map, markers[i].marker);
           setTimeout(function() {mapClicksInit()}, 50);
         });
       }

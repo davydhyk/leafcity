@@ -20,6 +20,16 @@ var User = new Schema({
     type: String,
     required: true,
     default: 'user'
+  },
+  name: {
+    type: String,
+    required: true,
+    default: 'Натисніть щоб вказати'
+  },
+  address: {
+    type: String,
+    required: true,
+    default: 'Натисніть щоб вказати'
   }
 });
 
