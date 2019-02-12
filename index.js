@@ -50,16 +50,28 @@ app.get('/reg', (req, res) => {
 });
 
 app.get('/', (req, res) => {
+  console.log(req.body);
   if (!req.session.user_id) res.redirect('/login');
   else {
-    if (req.session.user_role == "user") {
+    if (req.session.user_role == 'user') {
       models.user.findById(req.session.user_id, (err, doc) => {
         var user = {
           id: req.session.user_id,
           name: doc.name,
-          address: doc.address
+          address: doc.address,
+          coins: doc.coins
         }
         res.render('user', {user: user});
+      });
+    } else if (req.session.user_role == 'driver') {
+      models.user.findById(req.session.user_id, (err, doc) => {
+        var user = {
+          id: req.session.user_id,
+          name: doc.name,
+          address: doc.address,
+          coins: doc.coins
+        }
+        res.render('driver', {user: user});
       });
     }
   }

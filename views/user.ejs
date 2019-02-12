@@ -48,7 +48,7 @@
           <div class="profile-value">Понеділок<br>20.12.2016 19:40</div>
           <div class="profile-refresh"><img src="img/refresh.png" alt=""></div>
         </div>
-        <div class="profile-score"><img src="img/score.png" alt=""><span>235</span>&nbsp;монет</div>
+        <div class="profile-score"><img src="img/score.png" alt=""><span><%=user.coins %></span>&nbsp;монет</div>
         <div class="profile-shop"><img src="img/shop.png" alt=""></div>
       </div>
       <div class="noti">
@@ -115,4 +115,7 @@
   <script>
     window.user_id = '<%=user.id %>';
   </script>
+  <%- include('parts/script'); %>
+  <script src="js/scripts-user.js"></script>
+  <script src="js/edit.js"></script>
 <%- include('parts/footer'); %>

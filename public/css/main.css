@@ -608,6 +608,10 @@ body > p {
   background-color: #009b71;
 }
 
+.profile .work.end {
+  background-color: #009b71;
+}
+
 .noti ul {
   margin: 0;
   padding: 10px 8px;
@@ -711,4 +715,20 @@ body > p {
 
 .info-remove:hover {
   background-color: #d83914;
+}
+
+.info-pick {
+  margin-right: 5px;
+  display: inline-block;
+  padding: 0.2em 0.5em;
+  line-height: 1.2;
+  border-radius: 1em;
+  color: #fff;
+  background-color: #00b484;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.info-pick:hover {
+  background-color: #006b46;
 }

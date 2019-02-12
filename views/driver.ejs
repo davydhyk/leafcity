@@ -1,22 +1,10 @@
-<!DOCTYPE html>
-<html lang="ua">
-<head>
-  <meta charset="utf-8">
-	<title>LeafCity</title>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
-  <meta name="theme-color" content="#00b484">
-  <link rel="stylesheet" href="css/slick.css">
-  <link rel="stylesheet" href="css/slick-theme.css">
-	<link rel="stylesheet" href="css/main.css">
-</head>
-<body>
+<%- include('parts/header'); %>
   <p>Змініть орієнтацію на книжну</p>
   <section class="user">
     <div class="user-tab">
       <img src="img/leaf-dark.png" alt="">
-      <span>Додати місце</span>
+      <span>LeafCity</span>
+      <a href="/api/auth/logout" class="logout"><img src="img/logout.png" alt=""></a>
     </div>
     <div class="slider-nav">
       <div class="slider-nav-item">
@@ -35,10 +23,10 @@
     <div class="slider">
       <div class="map">
         <div id="map"></div>
-        <div class="btns">
+        <!-- <div class="btns">
           <div class="add-leaf pick-up">Взяти найближче</div>
           <div class="add-small search"><img src="img/search.png" alt=""></div>
-        </div>
+        </div> -->
       </div>
       <div class="profile">
         <div class="profile-info">
@@ -47,7 +35,7 @@
           </div>
           <div class="profile-contacts">
             <div class="profile-role">Водій</div>
-            <div class="profile-name">Андрій Вернюк</div>
+            <div class="profile-name" data-edit data-edit-type="name"><%=user.name %></div>
           </div>
         </div>
         <div class="profile-address">
@@ -59,7 +47,7 @@
           <div class="profile-title"><img src="img/rate.png" alt="">Рейтинг</div>
           <div class="profile-value">Ваш рейтинг <span>79%</span></div>
         </div>
-        <div class="work end">Завершити роботу</div>
+        <div class="work">Розпочати роботу</div>
       </div>
       <div class="noti">
         <ul>
@@ -121,38 +109,10 @@
       </div>
     </div>
   </section>
-
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBG2I3uy1WnkiNMJMwkqbyrQ0aFYWd5jzs"></script>
   <script>
-    var map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: 50.617953144089846, lng: 26.258654594421387},
-      zoom: 17,
-      disableDefaultUI: true
-    });
-    var points = [
-      {lat: 50.619954144089846, lng: 26.259654594421387}, 
-      {lat: 50.618754144089846, lng: 26.257254594421387}, 
-      {lat: 50.618954144089846, lng: 26.258654594421387}, 
-      {lat: 50.617953144095846, lng: 26.260654594415387}, 
-      {lat: 50.616953144085846, lng: 26.257654594428387}
-    ];
-    var markers = [];
-    function addMarkerWithTimeout(position, timeout) {
-      window.setTimeout(function() {
-        markers.push(new google.maps.Marker({
-          position: position,
-          map: map,
-          animation: google.maps.Animation.DROP,
-          icon: 'img/marker.png'
-        }));
-      }, timeout);
-    }
-    for (var i = 0; i < points.length; i++) {
-      addMarkerWithTimeout(points[i], i * 300);
-    }
+    window.user_id = '<%=user.id %>';
   </script>
-  <script src="js/jquery.min.js"></script>
-  <script src="js/slick.min.js"></script>
-  <script src="js/scripts.js"></script>
-</body>
-</html>
+  <%- include('parts/script'); %>
+  <script src="js/scripts-driver.js"></script>
+  <script src="js/edit.js"></script>
+<%- include('parts/footer'); %>

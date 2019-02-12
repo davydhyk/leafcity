@@ -30,6 +30,10 @@ var User = new Schema({
     type: String,
     required: true,
     default: 'Натисніть щоб вказати'
+  },
+  coins: {
+    type: Number,
+    default: 0
   }
 });
 

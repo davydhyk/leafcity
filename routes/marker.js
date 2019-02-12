@@ -34,17 +34,36 @@ router.post('/remove', (req, res) => {
   models.marker.findById(req.body.id, (err, marker) => {
     if (err) data.ok = false;
     if (!marker) return;
-    if (marker.author != req.session.user_id) {
+    if (marker.author != req.session.user_id && req.session.user_role == 'user') {
       data.ok = false;
       data.message = 'Ви не маєте права видаляти чужі мітки.';
     }
-    if (!data.ok) res.send(data);
-  })
-  if (!data.ok) return;
-  models.marker.findByIdAndRemove(req.body.id, (err, marker) => {
-    if (err) data.ok = false;
+    if (!data.ok) return res.send(data), 0;
+    marker.remove();
     res.send(data);
-  });
+  })
+});
+
+router.post('/pick', (req, res) => {
+  var data = {
+    ok: true
+  }
+  if (!req.session.user_id) {
+   data.ok = false;
+   res.send(data);
+   return; 
+  }
+  models.marker.findById(req.body.id, (err, marker) => {
+    if (err) data.ok = false;
+    if (!marker) return;
+    if (marker.author != req.session.user_id && req.session.user_role == 'user') {
+      data.ok = false;
+      data.message = 'Ви не маєте права видаляти чужі мітки.';
+    }
+    if (!data.ok) return res.send(data), 0;
+    marker.remove();
+    res.send(data);
+  })
 });
 
 router.get('/get', (req, res) => {
