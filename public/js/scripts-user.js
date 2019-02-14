@@ -8,6 +8,7 @@ function map() {
       markerInfo = new google.maps.InfoWindow();
   $.post('https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBG2I3uy1WnkiNMJMwkqbyrQ0aFYWd5jzs', {}).done(function (data) {
     pos = data.location;
+    $('.noti ul li:nth-child(2) .noti-text').text(data.location.lat + ' ' + data.location.lng);
     map.setCenter(pos);
   });
   map = new google.maps.Map(document.getElementById('map'), {
@@ -72,12 +73,22 @@ function map() {
           return;
         }
         btn.removeClass('active');
-        markers.push(new google.maps.Marker({
-          position: marker.getPosition(),
-          map: map,
-          animation: google.maps.Animation.DROP,
-          icon: marker.getIcon()
-        }));
+        markers.push({
+          marker: new google.maps.Marker({
+            position: marker.getPosition(),
+            map: map,
+            animation: google.maps.Animation.DROP,
+            icon: marker.getIcon()
+          }),
+          info: '<span data-index="' + markers.length + '" data-remove="' + data.id + '" class="info-remove">Видалити</span>'
+        });
+        var i = markers.length - 1;
+        markers[i].marker.addListener('click', function () {
+          markerInfo.close();
+          markerInfo.setContent(markers[i].info);
+          markerInfo.open(map, markers[i].marker);
+          setTimeout(function() {mapClicksInit()}, 50);
+        });
         marker.setMap(undefined);
       });
     } else {

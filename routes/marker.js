@@ -14,7 +14,8 @@ router.post('/add', (req, res) => {
     pos: req.body.pos,
     icon: req.body.icon,
     author: req.session.user_id
-  }).then(function () {
+  }).then(function (el) {
+    data.id = el._id;
     res.send(data);
   }).catch(function () {
     data.ok = false;

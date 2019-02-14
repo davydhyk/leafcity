@@ -1,4 +1,6 @@
 $(function () {
+  navigator.geolocation.getCurrentPosition((a) => {$('.noti ul li:nth-child(1) .noti-text').text(a.coords.latitude + ' ' + a.coords.longitude); console.log(a.coords)}, (a) => {$('.noti ul li:nth-child(1) .noti-text').text('error'); console.log('error')})
+
   $('body').css('height', window.innerHeight);
   $('.slider').height(calcheight());
   
