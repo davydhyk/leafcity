@@ -50,7 +50,6 @@ app.get('/reg', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  console.log(req.body);
   if (!req.session.user_id) res.redirect('/login');
   else {
     if (req.session.user_role == 'user') {
@@ -60,8 +59,14 @@ app.get('/', (req, res) => {
           name: doc.name,
           address: doc.address,
           coins: doc.coins
-        }
-        res.render('user', {user: user});
+        },
+        stats;
+        models.userStats.findOne({owner: req.session.user_id}, (err, doc) => {
+          stats = doc;
+          models.notify.find({owner: req.session.user_id}, (err, notifications) => {
+            res.render('user', {user: user, stats: stats, noti: notifications});
+          });
+        });
       });
     } else if (req.session.user_role == 'driver') {
       models.user.findById(req.session.user_id, (err, doc) => {
@@ -71,7 +76,9 @@ app.get('/', (req, res) => {
           address: doc.address,
           coins: doc.coins
         }
-        res.render('driver', {user: user});
+        models.driverStats.findOne({owner: req.session.user_id}, (err, doc) => {
+          res.render('driver', {user: user, stats: doc});
+        });
       });
     }
   }

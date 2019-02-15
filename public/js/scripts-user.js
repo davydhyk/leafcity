@@ -6,11 +6,10 @@ var markers = [],
 function map() {
   var pos,
       markerInfo = new google.maps.InfoWindow();
-  $.post('https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBG2I3uy1WnkiNMJMwkqbyrQ0aFYWd5jzs', {}).done(function (data) {
-    pos = data.location;
-    $('.noti ul li:nth-child(2) .noti-text').text(data.location.lat + ' ' + data.location.lng);
-    map.setCenter(pos);
-  });
+  // $.post('https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBG2I3uy1WnkiNMJMwkqbyrQ0aFYWd5jzs', {}).done(function (data) {
+  //   pos = data.location;
+  //   map.setCenter(pos);
+  // });
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 50.617953144089846, lng: 26.258654594421387},
     zoom: 17,
@@ -66,6 +65,7 @@ function map() {
         icon: marker.getIcon()
       }
       $.post('/api/marker/add', req).done(function (data) {
+        console.log(data);
         if (!data.ok) {
           var addInfoErr = new google.maps.InfoWindow({content: 'Помилка.. Спробуйте пізніше.'});
           addInfoErr.open(map, marker);

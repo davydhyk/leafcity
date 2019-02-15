@@ -41,72 +41,38 @@
         <div class="profile-address">
           <div class="profile-title"><img src="img/home.png" alt="">Домашня адреса</div>
           <div class="profile-value" data-edit data-edit-type="address"><%=user.address %></div>
-          <div class="profile-refresh"><img src="img/refresh.png" alt=""></div>
         </div>
         <div class="profile-next">
-          <div class="profile-title"><img src="img/date.png" alt="">Наступний вивіз</div>
-          <div class="profile-value">Понеділок<br>20.12.2016 19:40</div>
-          <div class="profile-refresh"><img src="img/refresh.png" alt=""></div>
+          <div class="profile-title"><img src="img/cnt.png" alt="">Статистика</div>
+          <div class="profile-value">Створено маркерів <span><%=stats.created %></span></div>
+          <div class="profile-value">Вивезено листя <span><%=stats.picked %></span></div>
+          <div class="profile-value">Локалізовано підпалів <span><%=stats.localized %></span></div>
         </div>
         <div class="profile-score"><img src="img/score.png" alt=""><span><%=user.coins %></span>&nbsp;монет</div>
         <div class="profile-shop"><img src="img/shop.png" alt=""></div>
       </div>
       <div class="noti">
         <ul>
-          <li>
-            <div class="noti-image">
-              <img src="img/noti/home.png" alt="">
-            </div>
-            <div class="noti-content">
-              <div class="noti-title green">Листя вивезено</div>
-              <div class="noti-text">Листя вивезено з вашого будинку, на ваш рахунок нараховано 17 монет. Дякуємо за допомогу</div>
-            </div>
-          </li>
-          <li>
-            <div class="noti-image">
-              <img src="img/noti/sad.png" alt="">
-            </div>
-            <div class="noti-content">
-              <div class="noti-title green">Машина недоступна</div>
-              <div class="noti-text">Нажаль в даний момент машина не може забрти листя. Ми повідомимо коли це стане можливо. Дякуємо за допомогу.</div>
-            </div>
-          </li>
-          <li>
-            <div class="noti-image">
-              <img src="img/noti/fire.png" alt="">
-            </div>
-            <div class="noti-content">
-              <div class="noti-title red">Ми вже реагуємо</div>
-              <div class="noti-text">Дякуємо за звертання. Найближчим часом наші фахівці вирішать питання з підпалом у вашому районі. Будьте обережні.</div>
-            </div>
-          </li>
-          <li>
-            <div class="noti-image">
-              <img src="img/noti/car.png" alt="">
-            </div>
-            <div class="noti-content">
-              <div class="noti-title green">Очікуйте машину</div>
-              <div class="noti-text">Машина прибуде до Вас на протязі 5 днів. Очікуйте сповіщення.</div>
-            </div>
-          </li>
-          <li>
-            <div class="noti-image">
-              <img src="img/noti/home.png" alt="">
-            </div>
-            <div class="noti-content">
-              <div class="noti-title green">Листя вивезено</div>
-              <div class="noti-text">Листя вивезено з вашого будинку, на ваш рахунок нараховано 17 монет. Дякуємо за допомогу</div>
-            </div>
-          </li>
-          <li>
-            <div class="noti-image">
-              <img src="img/noti/home.png" alt="">
-            </div>
-            <div class="noti-content">
-              <div class="noti-title green">Листя вивезено</div>
-              <div class="noti-text">Листя вивезено з вашого будинку, на ваш рахунок нараховано 17 монет. Дякуємо за допомогу</div>
-            </div>
-          </li>
+          <% if (noti.length == 0) { %>
+            <li>
+              <div class="noti-image"></div>
+              <div class="noti-content">
+                <div class="noti-title" style="color: grey; text-align: center;">Поки що немає сповіщень</div>
+              </div>
+            </li>
+          <% }%>
+          <% noti.forEach(function(notif){ %>
+            <li>
+              <div class="noti-image">
+                <img src="<%=notif.icon %>" alt="">
+              </div>
+              <div class="noti-content">
+                <div class="noti-title <% if (notif.icon.indexOf('fire') != -1) { %> red<% } %>
+                  <% if (notif.icon.indexOf('fire') == -1) { %> green <% } %>"><%=notif.title %></div>
+                <div class="noti-text"><%=notif.text %></div>
+              </div>
+            </li>
+          <% }); %>
         </ul>
       </div>
     </div>

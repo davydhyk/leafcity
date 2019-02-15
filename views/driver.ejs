@@ -23,10 +23,10 @@
     <div class="slider">
       <div class="map">
         <div id="map"></div>
-        <!-- <div class="btns">
-          <div class="add-leaf pick-up">Взяти найближче</div>
-          <div class="add-small search"><img src="img/search.png" alt=""></div>
-        </div> -->
+        <div class="btns">
+          <div class="add-small leaf start">S<span>Підтвердити</span></div>
+          <div class="add-small fire finish">F<span>Підтвердити</span></div>
+        </div>
       </div>
       <div class="profile">
         <div class="profile-info">
@@ -39,14 +39,15 @@
           </div>
         </div>
         <div class="profile-address">
-          <div class="profile-title"><img src="img/cnt.png" alt="">Кількість виконаних замовлень</div>
-          <div class="profile-value">Сьогодні <span>4</span></div>
-          <div class="profile-value">За тиждень <span>34</span></div>
+          <div class="profile-title"><img src="img/cnt.png" alt="">Статистика</div>
+          <div class="profile-value">Оброблено маркерів <span><%=stats.operated %></span></div>
+          <div class="profile-value">Вивезено листя <span><%=stats.picked %></span></div>
+          <div class="profile-value">Локалізовано підпалів <span><%=stats.localized %></span></div>
         </div>
-        <div class="profile-next">
+        <!-- <div class="profile-next">
           <div class="profile-title"><img src="img/rate.png" alt="">Рейтинг</div>
           <div class="profile-value">Ваш рейтинг <span>79%</span></div>
-        </div>
+        </div> -->
         <div class="work">Розпочати роботу</div>
       </div>
       <div class="noti">

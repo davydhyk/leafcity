@@ -109,6 +109,7 @@ router.post('/reg', (req, res) => {
           phone: phone.replace(/ |\(|\)|-/g, ''),
           password: hash
         }).then(user => {
+          models.userStat.create({owner: user._id});
           res.send(data);
         }).catch((err) => {
           data.ok = false;

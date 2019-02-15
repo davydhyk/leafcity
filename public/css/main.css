@@ -299,11 +299,16 @@ body > p {
   -webkit-transition: 0.2s;
   -o-transition: 0.2s;
   transition: 0.2s;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.2em;
 }
 
 .slider .map .add-small span {
   display: none;
+  font-weight: normal;
   color: #fff;
+  font-size: 0.833em;
 }
 
 .slider .map .add-small.active {
