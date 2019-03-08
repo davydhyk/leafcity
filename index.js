@@ -75,9 +75,51 @@ app.get('/', (req, res) => {
           name: doc.name,
           address: doc.address,
           coins: doc.coins
-        }
+        }, stats;
         models.driverStats.findOne({owner: req.session.user_id}, (err, doc) => {
-          res.render('driver', {user: user, stats: doc});
+          stats = doc;
+          models.notify.find({owner: req.session.user_id}, (err, notifications) => {
+            res.render('driver', {user: user, stats: stats, noti: notifications});
+          });
+        });
+      });
+    } else if (req.session.user_role == 'admin') {
+      models.user.find({}, (err, usersMap) => {
+        var admin, stats, users = [], general = {
+          operated: 0,
+          picked: 0,
+          localized: 0,
+          users: usersMap.length,
+          coins: 0,
+          drivers: 0,
+          admins: 0
+        };
+        usersMap.forEach(user => {
+          general.coins += user.coins;
+          if (user.role == 'driver') general.drivers++;
+          else if (user.role == 'admin') general.admins++;
+          if (user._id == req.session.user_id) admin = {
+            id: req.session.user_id,
+            name: user.name,
+            address: user.address,
+            coins: user.coins
+          }
+          users.push({
+            id: user._id,
+            email: user.email,
+            phone: user.phone,
+            name: user.name,
+            role: user.role
+          });
+        });
+        models.driverStats.find({}, (err, statsMap) => {
+          statsMap.forEach(stat => {
+            if (stat.owner == req.session.user_id) stats = stat;
+            general.operated += stat.operated;
+            general.picked += stat.picked;
+            general.localized += stat.localized;
+          });
+          res.render('admin', {user: admin, stats: stats, users: users, general: general});
         });
       });
     }

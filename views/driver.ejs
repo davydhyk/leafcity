@@ -31,7 +31,7 @@
       <div class="profile">
         <div class="profile-info">
           <div class="profile-photo">
-            <img src="img/avatar.png" alt="">
+            <img src="img/driver.png" alt="">
           </div>
           <div class="profile-contacts">
             <div class="profile-role">Водій</div>
@@ -52,60 +52,26 @@
       </div>
       <div class="noti">
         <ul>
-          <li>
-            <div class="noti-image">
-              <img src="img/noti/home.png" alt="">
-            </div>
-            <div class="noti-content">
-              <div class="noti-title green">Листя вивезено</div>
-              <div class="noti-text">Листя вивезено з вашого будинку, на ваш рахунок нараховано 17 монет. Дякуємо за допомогу</div>
-            </div>
-          </li>
-          <li>
-            <div class="noti-image">
-              <img src="img/noti/sad.png" alt="">
-            </div>
-            <div class="noti-content">
-              <div class="noti-title green">Машина недоступна</div>
-              <div class="noti-text">Нажаль в даний момент машина не може забрти листя. Ми повідомимо коли це стане можливо. Дякуємо за допомогу.</div>
-            </div>
-          </li>
-          <li>
-            <div class="noti-image">
-              <img src="img/noti/fire.png" alt="">
-            </div>
-            <div class="noti-content">
-              <div class="noti-title red">Ми вже реагуємо</div>
-              <div class="noti-text">Дякуємо за звертання. Найближчим часом наші фахівці вирішать питання з підпалом у вашому районі. Будьте обережні.</div>
-            </div>
-          </li>
-          <li>
-            <div class="noti-image">
-              <img src="img/noti/car.png" alt="">
-            </div>
-            <div class="noti-content">
-              <div class="noti-title green">Очікуйте машину</div>
-              <div class="noti-text">Машина прибуде до Вас на протязі 5 днів. Очікуйте сповіщення.</div>
-            </div>
-          </li>
-          <li>
-            <div class="noti-image">
-              <img src="img/noti/home.png" alt="">
-            </div>
-            <div class="noti-content">
-              <div class="noti-title green">Листя вивезено</div>
-              <div class="noti-text">Листя вивезено з вашого будинку, на ваш рахунок нараховано 17 монет. Дякуємо за допомогу</div>
-            </div>
-          </li>
-          <li>
-            <div class="noti-image">
-              <img src="img/noti/home.png" alt="">
-            </div>
-            <div class="noti-content">
-              <div class="noti-title green">Листя вивезено</div>
-              <div class="noti-text">Листя вивезено з вашого будинку, на ваш рахунок нараховано 17 монет. Дякуємо за допомогу</div>
-            </div>
-          </li>
+          <% if (noti.length == 0) { %>
+            <li>
+              <div class="noti-image"></div>
+              <div class="noti-content">
+                <div class="noti-title" style="color: grey; text-align: center;">Поки що немає сповіщень</div>
+              </div>
+            </li>
+          <% }%>
+          <% noti.forEach(function(notif){ %>
+            <li>
+              <div class="noti-image">
+                <img src="<%=notif.icon %>" alt="">
+              </div>
+              <div class="noti-content">
+                <div class="noti-title <% if (notif.icon.indexOf('fire') != -1) { %> red<% } %>
+                  <% if (notif.icon.indexOf('fire') == -1) { %> green <% } %>"><%=notif.title %></div>
+                <div class="noti-text"><%=notif.text %></div>
+              </div>
+            </li>
+          <% }); %>
         </ul>
       </div>
     </div>

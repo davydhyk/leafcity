@@ -8,14 +8,14 @@ $(function () {
     arrows: false,
     focusOnSelect: true,
     asNavFor: $('.slider'),
-    initialSlide: 0
+    initialSlide: 1
   });
   
   $('.slider').slick({
     slidesToShow: 1,
     arrows: false,
     asNavFor: $('.slider-nav'),
-    initialSlide: 0
+    initialSlide: 1
   });
 
   $('.slider').height(calcheight());

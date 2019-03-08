@@ -1,0 +1,80 @@
+<%- include('parts/header'); %>
+  <p>Змініть орієнтацію на книжну</p>
+  <section class="user">
+    <div class="user-tab">
+      <img src="img/leaf-dark.png" alt="">
+      <span>LeafCity</span>
+      <a href="/api/auth/logout" class="logout"><img src="img/logout.png" alt=""></a>
+    </div>
+    <div class="slider-nav">
+      <div class="slider-nav-item">
+        <img src="img/map.png" alt="" class="passive">
+        <img src="img/map-a.png" alt="" class="active">
+      </div>
+      <div class="slider-nav-item">
+        <img src="img/profile.png" alt="" class="passive">
+        <img src="img/profile-a.png" alt="" class="active">
+      </div>
+      <div class="slider-nav-item">
+        <img src="img/bell.png" alt="" class="passive">
+        <img src="img/bell-a.png" alt="" class="active">
+      </div>
+    </div>
+    <div class="slider">
+      <div class="map">
+        <div id="map"></div>
+      </div>
+      <div class="users">
+        <input type="text" placeholder="Телефон або e-mail">
+        <ul>
+          <% users.forEach(function(user){ %>
+            <li data-user-id="<%=user.id %>">
+              <div class="users-contacts">
+                <span><%=(user.name.length > 10) ? '' : user.name %></span>
+                <span><%=user.phone %></span>
+                <span><%=user.email %></span>
+              </div>
+              <div class="users-icons">
+                <a href="#" class="<%=user.role %>"><%=user.role %></a>
+                <a href="#" class="stats">stats</a>
+                <a href="#" class="delete"><img src="img/trash.png" alt=""></a>
+              </div>
+            </li>
+          <% }); %>
+        </ul>
+      </div>
+      <div class="profile">
+        <div class="profile-info">
+          <div class="profile-photo">
+            <img src="img/admin.png" alt="">
+          </div>
+          <div class="profile-contacts">
+            <div class="profile-role">Адмін</div>
+            <div class="profile-name" data-edit data-edit-type="name"><%=user.name %></div>
+          </div>
+        </div>
+        <div class="profile-address">
+          <div class="profile-title"><img src="img/cnt.png" alt="">Власна статистика</div>
+          <div class="profile-value">Оброблено маркерів <span><%=stats.operated %></span></div>
+          <div class="profile-value">Вивезено листя <span><%=stats.picked %></span></div>
+          <div class="profile-value">Локалізовано підпалів <span><%=stats.localized %></span></div>
+          <br>
+          <div class="profile-title"><img src="img/cnt.png" alt="">Загальна статистика</div>
+          <div class="profile-value">Оброблено маркерів <span><%=general.operated %></span></div>
+          <div class="profile-value">Вивезено листя <span><%=general.picked %></span></div>
+          <div class="profile-value">Локалізовано підпалів <span><%=general.localized %></span></div>
+          <div class="profile-value">Користувачів <span><%=general.users %></span></div>
+          <div class="profile-value">Водії <span><%=general.drivers %></span></div>
+          <div class="profile-value">Адміністратори <span><%=general.admins %></span></div>
+          <div class="profile-value">Всього зароблених монет <span><%=general.coins %></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+    window.user_id = '<%=user.id %>';
+  </script>
+  <%- include('parts/script'); %>
+  <script src="js/scripts-admin.js"></script>
+  <script src="js/edit.js"></script>
+<%- include('parts/footer'); %>
