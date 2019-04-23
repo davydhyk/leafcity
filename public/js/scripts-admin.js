@@ -2,6 +2,113 @@ var markers = [],
     pos,
     markerInfo = new google.maps.InfoWindow();
 
+$('#users-search').on('input', function () {
+  console.log($(this).val());
+  var text = $(this).val().toLowerCase();
+  $(this).next().find('li').each(function () {
+    var finded = false;
+    $(this).find('span').each(function () {
+      if ($(this).text().toLowerCase().indexOf(text) != -1) finded = true;
+    })
+    if (finded) $(this).show();
+    else $(this).hide();
+  });
+})
+
+$('.users-icons .delete').click(function () {
+  Swal.fire({
+    title: 'Ви впевнені?',
+    text: "Ви більше не зможете повернути користувача.",
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#009b71',
+    cancelButtonColor: '#ea431c',
+    confirmButtonText: 'Так, видалити!',
+    cancelButtonText: 'Відмінити!'
+  }).then((res) => {
+    if (res.value) {
+      var base = $(this).parent().parent();
+      $.post('/api/profile/remove', {id: base.data('user-id')}).done(function (data) {
+        if (data.ok) base.remove();
+        Swal.fire({
+          toast: true,
+          title: data.ok ? 'Користувача успішно видалено!' : 'Сталася помилка!',
+          type: data.ok ? 'success' : 'error',
+          position: 'bottom',
+          showConfirmButton: false,
+          timer: 1500
+        });
+      });
+    }
+  })
+});
+
+$('.users-icons .stats').click(function () {
+  Swal.fire({
+    title: 'Ви впевнені що хочете скинути статистику?',
+    text: "Ви більше не зможете її повернути.",
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#009b71',
+    cancelButtonColor: '#ea431c',
+    confirmButtonText: 'Так, скинути!',
+    cancelButtonText: 'Відмінити!'
+  }).then((res) => {
+    if (res.value) {
+      var base = $(this).parent().parent();
+      $.post('/api/profile/reset', {id: base.data('user-id')}).done(function (data) {
+        Swal.fire({
+          toast: true,
+          title: data.ok ? 'Статистику успішно скинуто!' : 'Сталася помилка!',
+          type: data.ok ? 'success' : 'error',
+          position: 'bottom',
+          showConfirmButton: false,
+          timer: 1500
+        });
+      });
+    }
+  })
+});
+
+$('.users-icons a:nth-child(1)').click(async function () {
+  var role = $(this).text();
+  var el = $(this);
+  var user_id = $(this).parent().parent().data('user-id');
+  const {value: new_role} = await Swal.fire({
+    title: 'Виберіть роль користувача',
+    input: 'select',
+    inputOptions: {
+      'admin': 'Адміністратор',
+      'driver': 'Водій',
+      'user': 'Користувач'
+    },
+    inputPlaceholder: 'Виберіть роль користувача',
+    showCancelButton: true,
+    inputValidator: (value) => {
+      return new Promise((resolve) => {
+        if (value && value != role) {
+          resolve()
+        } else {
+          resolve('Ви повинні вибрати роль або змінити її')
+        }
+      })
+    }
+  })
+  if (new_role) {
+    $.post('/api/profile/role', {id: user_id, role: new_role}).done((data) => {
+      if (data.ok) el.removeClass(role).addClass(new_role).text(new_role);
+      Swal.fire({
+        toast: true,
+        title: data.ok ? 'Роль користувача успішно змінено!' : 'Сталася помилка!',
+        type: data.ok ? 'success' : 'error',
+        position: 'bottom',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    });
+  }
+});
+
 function map() {
 
   // $.post('https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBG2I3uy1WnkiNMJMwkqbyrQ0aFYWd5jzs', {}).done(function (data) {
